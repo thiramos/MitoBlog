@@ -33,3 +33,23 @@
         display: none;
     }
 }
+
+.col-sm-4 {
+    min-height: 200px;
+    margin-bottom: 20px;
+}
+
+.post-card {
+
+
+}
+
+.post-title {
+    font-size: 20px;
+    font-weight: 400;  
+}
+
+.post-more {
+    text-align: center;
+    margin-top: 20px;
+}

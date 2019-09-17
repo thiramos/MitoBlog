@@ -32,4 +32,4 @@
         appendBlogList: appendBlogList,
         showBlogItem: showBlogItem
     }
-});
+});

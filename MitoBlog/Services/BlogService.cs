@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using MitoBlog.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MitoBlog.Services
 {
@@ -41,7 +39,6 @@ namespace MitoBlog.Services
         public string GetPostText(string link)
         {
             var post = Posts.FirstOrDefault(_ => _.Link == link);
-
             return File.ReadAllText($"{_env.WebRootPath}/Posts/{post.PostId}_post.md");
         }
 

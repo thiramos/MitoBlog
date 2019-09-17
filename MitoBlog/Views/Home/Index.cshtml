@@ -6,20 +6,22 @@
     <p>study and share, a learning philosophy</p>
 </div>
 
-<div class="blog-list card-columns" id="blog-list">
-</div>
+<div class="blog-list card-columns" id="blog-list"></div>
 
-<div class="center">
-    <button class="btn btn-primary" onclick="pageEvents.loadMoreBlogPosts();">ver mais</button>
-    <br /><br />
+<div class="center post-more">
+    <button class="btn btn-secondary btn-lg btn-block" onclick="pageEvents.loadMoreBlogPosts();">
+        <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span> ver mais
+    </button>
 </div>
 
 <div id="blog-item-container"></div>
 
 <script id="blog-card" type="text/template">
-    <div class="card">
+    <div class="card col-lg-12 col-sm-4 post-card">
         <div class="card-body">
-            <h5 class="card-title">{{PostId}} - {{Title}}</h5>
+            <h5 class="card-title post-title">
+                <a href="#" onclick="pageEvents.loadBlogPost('{{Link}}');">{{PostId}} - {{Title}}</a>
+            </h5>
             <p class="card-text">{{ShortDescription}}</p>
             <button onclick="pageEvents.loadBlogPost('{{Link}}');" class="btn btn-primary">ir</button>
         </div>

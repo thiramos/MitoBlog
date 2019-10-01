@@ -8,7 +8,7 @@
         template =
             template.replace('{{ShortDescription}}',
                 item.shortDescription);
-        template = template.replace('{{Link}}',
+        template = template.replace(/{{Link}}/g,
             item.link);
         return template;
     }
@@ -23,7 +23,7 @@
 
     function showBlogItem(html, link) {
         var template = $('#blog-item').html();
-        template = template.replace('{{Link}}', link);
+        template = template.replace(/{{Link}}/g, link);
         template = template.replace('{{Content}}', html);
         $('#blog-item-container').html(template);
     }

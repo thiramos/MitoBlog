@@ -8,8 +8,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     defferedPrompt = e;
     //atualizar a tela para notificar o usuario
     // que ele pode adicionar à tela de home
-    $('#install-container').show();
-
+    $('.toast').toast('show');
 });
 
 window.addEventListener('appinstalled', (evt) => {
@@ -29,7 +28,7 @@ window.pageEvents = {
         defferedPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome == 'accepted') {
                 console.log('Usuário aceitou o A2HS prompt');
-                $('#install-container').hide();
+                $('.toast').toast('hide');
             }
             defferedPrompt = null;
         });

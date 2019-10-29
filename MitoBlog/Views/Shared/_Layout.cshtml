@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="study and post, a learning philosophy">
     <link rel="manifest" href="/manifest.json">
-    <title>@ViewData["Title"] - Mito Blog</title>
+    <title>@ViewData["Title"] - MitoBlog</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-
     <div style="display:none; padding: 5px; text-align:center;" id="install-container">
         <button onclick="pageEvents.tryAddHomeScreen();" class="btn-link no-style">Clique aqui</button>
-        e adicione Mito Blog na sua home!
+        e adicione Maki Blog na sua home!
     </div>
-
+    <div id="notification-subscribe-section" style="display:none; padding: 5px; text-align:center;">
+        <button class="btn-link no-style" onclick="pageEvents.requestPushPermission();">Clique aqui</button> para receber notificações quando novos artigos forem publicados
+    </div>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mito Blog</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MitoBlog</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -47,7 +48,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Mito Blog - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - MitoBlog - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 
@@ -59,7 +60,7 @@
     <script src="~/lib/localforage/localforage.min.js"></script>
     <script src="~/lib/localforage/localforage-getitems.js"></script>
     <script src="~/lib/localforage/localforage-setitems.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

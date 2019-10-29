@@ -4,7 +4,7 @@
 
 <div class="text-center" id="blog-title">
     <h1 class="display-4">Mito Blog</h1>
-    <p>study and post, a learning philosophy</p>
+    <p>study and share, a learning philosophy</p>
 </div>
 
 <div class="alert alert-info show" id="connection-status"></div>
@@ -13,9 +13,7 @@
 </div>
 
 <div class="center">
-    <button class="btn btn-secondary btn-lg btn-block" onclick="pageEvents.loadMoreBlogPosts();">
-        <span class="btn-label"><i class="glyphicon glyphicon-plus"></i></span> ver mais
-    </button>
+    <button class="btn btn-primary" onclick="pageEvents.loadMoreBlogPosts();">ver mais</button>
     <br /><br />
 </div>
 
@@ -24,9 +22,7 @@
 <script id="blog-card" type="text/template">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title post-title">
-                <a href="#" onclick="pageEvents.loadBlogPost('{{Link}}');">{{PostId}} - {{Title}}</a>
-            </h5>
+            <h5 class="card-title">{{PostId}} - {{Title}}</h5>
             <p class="card-text">{{ShortDescription}}</p>
             <button onclick="pageEvents.loadBlogPost('{{Link}}');" class="btn btn-primary">ir</button>
         </div>
@@ -37,4 +33,27 @@
         {{Content}}
     </div>
     <a href="#blog-title" class="btn btn-primary">voltar</a>
+</script>
+
+<script id="blog-content-not-found" type="text/template">
+    <h1>
+        Ups, artigo não está no Cache!
+    </h1>
+    <div>
+        Você quer que a gente continue tentando fazer download do artigo
+        em plano de fundo e te avise quando estiver disponível?
+    </div>
+    <br />
+    <button class="btn btn-primary download-start" onclick="pageEvents.setBackgroundFetch('{{Link}}');">Sim!</button>
+    <br />
+    <br />
+    <div id="status-download" style="display:none;">
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+        </div>
+        <div class="text-success">
+            <p>pronto!</p>
+            <button class="btn btn-success" onclick="pageEvents.loadBlogPost('{{Link}}');">ler!</button>
+        </div>
+    </div>
 </script>

@@ -1,21 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MitoBlog.Models;
+using Lib.Net.Http.WebPush;
+using MitoBlog.Store;
 using MitoBlog.Services;
 
-namespace MitoBlog.Controllers
+namespace MitoBlog.Models
 {
     public class HomeController : Controller
     {
         private IBlogService _blogService;
-        
-        public HomeController(IBlogService blogService)
+        private readonly IPushSubscriptionStore _subscriptionStore;
+        private readonly PushServiceClient _pushClient;
+
+        public HomeController(IBlogService blogService, IPushSubscriptionStore subscriptionStore, PushServiceClient pushClient)
         {
             _blogService = blogService;
+            _subscriptionStore = subscriptionStore;
+            _pushClient = pushClient;
         }
 
         public IActionResult Index()
@@ -23,20 +26,12 @@ namespace MitoBlog.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Privacy()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
@@ -58,5 +53,49 @@ namespace MitoBlog.Controllers
         {
             return Content(_blogService.GetPostText(link));
         }
+
+        [HttpGet("publickey")]
+        public ContentResult GetPublicKey()
+        {
+            return Content(_pushClient.DefaultAuthentication.PublicKey, "text/plain");
+        }
+
+        //armazena subscricoes
+        [HttpPost("subscriptions")]
+        public async Task<IActionResult> StoreSubscription([FromBody]PushSubscription subscription)
+        {
+            int res = await _subscriptionStore.StoreSubscriptionAsync(subscription);
+
+            if (res > 0)
+                return CreatedAtAction(nameof(StoreSubscription), subscription);
+
+            return NoContent();
+        }
+
+        [HttpDelete("subscriptions")]
+        public async Task<IActionResult> DiscardSubscription(string endpoint)
+        {
+            await _subscriptionStore.DiscardSubscriptionAsync(endpoint);
+
+            return NoContent();
+        }
+
+        [HttpPost("notifications")]
+        public async Task<IActionResult> SendNotification([FromBody]PushMessageViewModel messageVM)
+        {
+            var message = new PushMessage(messageVM.Notification)
+            {
+                Topic = messageVM.Topic,
+                Urgency = messageVM.Urgency
+            };
+
+            await _subscriptionStore.ForEachSubscriptionAsync((PushSubscription subscription) =>
+            {
+                _pushClient.RequestPushMessageDeliveryAsync(subscription, message);
+            });
+
+            return NoContent();
+        }
     }
+
 }

@@ -14,7 +14,7 @@
                 });
         });
     }
-
+    
     function addPostText(link, text) {
         return new Promise(function (resolve, reject) {
             blogInstance.setItem('#' + link, text).then(function () {
@@ -27,6 +27,7 @@
         return new Promise(function (resolve, reject) {
 
             var keyValuePair = [];
+
             posts.map(function (item) {
                 keyValuePair.push({ key: String(item.postId), value: item });
             })
@@ -46,7 +47,7 @@
 
             blogInstance.keys().then(function (keys) {
 
-                keys = keys.filter(function (a) { return !a.includes('#') });
+                keys = keys.filter(function (a) { return a && !a.includes('#') });
                 keys = keys.sort(function (a, b) { return a - b });
 
                 var index = keys.indexOf(oldestBlogPostId);

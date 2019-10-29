@@ -6,7 +6,6 @@ using System.Linq;
 
 namespace MitoBlog.Services
 {
-
     public class BlogService : IBlogService
     {
         private IHostingEnvironment _env;
@@ -39,6 +38,7 @@ namespace MitoBlog.Services
         public string GetPostText(string link)
         {
             var post = Posts.FirstOrDefault(_ => _.Link == link);
+
             return File.ReadAllText($"{_env.WebRootPath}/Posts/{post.PostId}_post.md");
         }
 

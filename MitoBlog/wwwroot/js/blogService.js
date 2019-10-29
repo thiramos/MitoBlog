@@ -31,7 +31,7 @@
                     resolve('No connection, showing offline results');
                 });
 
-            setTimeout(function () { resolve('The connection is hanging, showing offline results'); }, 5000);
+            setTimeout(function () { resolve('The connection is hanging, showing offline results'); }, 800);
         });
     }
 
@@ -52,15 +52,25 @@
     }
 
     function loadBlogPost(link) {
+
         fetchPromise(blogPostUrl, link, true)
             .then(function (status) {
                 $('#connection-status').html(status);
 
                 clientStorage.getPostText(link)
                     .then(function (data) {
-                        var converter = new showdown.Converter();
-                        html = converter.makeHtml(data);
-                        template.showBlogItem(html, link);
+                        if (!data) {
+
+                            var contentNotFound = $('#blog-content-not-found')
+                                .html().replace(/{{Link}}/g, link)
+                                ;
+
+                            template.showBlogItem(contentNotFound, link);
+                        } else {
+                            var converter = new showdown.Converter();
+                            html = converter.makeHtml(data);
+                            template.showBlogItem(html, link);
+                        }
                         window.location = '#' + link;
                     })
             });

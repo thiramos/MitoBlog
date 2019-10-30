@@ -25,16 +25,23 @@
         $('#blog-item-container').html(template);
     }
 
-    function showBlogComment(name, email, text) {
+    function showBlogComment(data) {
         var template = $('#blog-comment').html();
-        template = template.replace('{{Name}}', name);
-        template = template.replace('{{Email}}', email);
-        template = template.replace('{{Text}}', text);
+        template = template.replace('{{Name}}', data.nome);
+        template = template.replace('{{Email}}', data.email);
+        template = template.replace('{{Text}}', data.text);
         $('#blog-comment-container').html(template);
+    }
+
+    function showBlogNotComment() {
+        var template = $('#blog-not-comment').html();
+        $('#blog-not-comment-container').html(template);
     }
 
     return {
         appendBlogList: appendBlogList,
-        showBlogItem: showBlogItem
+        showBlogItem: showBlogItem,
+        showBlogComment: showBlogComment,
+        showBlogNotComment: showBlogNotComment
     }
 });

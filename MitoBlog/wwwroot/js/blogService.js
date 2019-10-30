@@ -69,7 +69,7 @@
                             var converter = new showdown.Converter();
                             html = converter.makeHtml(data);
                             template.showBlogItem(html, link);
-                            loadComentPost(link);
+                            loadComment(link);
                         }
                         window.location = '#' + link;
                     })
@@ -86,23 +86,25 @@
         }
         var d = new Date();
 
-        var key = "#comments-" + link + "-" + d.getTime();
+        //var key = "#comments-" + link + "-" + d.getTime();
+        var key = "#comments-" + link;
         var value = { nome: nome, email: email, text: text };
         
-        clientStorage.addComment(key, value);
+        clientStorage.addComment(key, value)
+            .then(function () {
+                loadComment(link);
+            });
     }
 
-    function loadComentPost(link) {
-        fetchPromise(link)
-            .then(function (status) {
-                $('#connection-status').html(status);
+    function loadComment(link) {
+        clientStorage.getPostComment(link)
+            .then(function (data) {
+                if (!data) {
+                    template.showBlogNotComment();
+                    return;
+                }
 
-                clientStorage.getPostCommentText(link)
-                    .then(function (data) {
-                        if (data) {
-                            template.showBlogComment(name, link, text);
-                        }
-                    });
+                template.showBlogComment(data);
             });
     }
 
@@ -114,7 +116,7 @@
         loadLatestBlogPosts: loadLatestBlogPosts,
         loadBlogPost: loadBlogPost,
         loadMoreBlogPosts: loadMoreBlogPosts,
-        loadComentPost: loadComentPost,
+        loadComment: loadComment,
         insertComment: insertComment
     }
 });

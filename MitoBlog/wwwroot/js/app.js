@@ -29,6 +29,9 @@ window.pageEvents = {
     insertComment: function (link) {
         blogService.insertComment(link);
     },
+    loadComment: function (link) {
+        blogService.loadComment(link);
+    },
     tryAddHomeScreen: function () {
         defferedPrompt.prompt();
         defferedPrompt.userChoice.then((choiceResult) => {

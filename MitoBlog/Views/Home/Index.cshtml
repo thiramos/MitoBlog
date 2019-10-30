@@ -60,11 +60,23 @@
     </div>
 </script>
 
-<div id="blog-item-comment"></div>
+<div id="blog-comment-container"></div>
 
 <script id="blog-comment" type="text/template">
-    <div id="{{Nome}} - {{Email}}" class="blog-item">
-        {{Text}}
+    <div class="card">
+        <div class="card-body">
+            <h5>{{Name}} - {{Email}}</h5>
+            <div>{{Text}}</div>
+        </div>
+    </div>
+</script>
+
+<div id="blog-not-comment-container"></div>
+<script id="blog-not-comment" type="text/template">
+    <div class="card" style="margin-bottom: 10px;">
+        <div class="card-body">
+            <h5>Nenhum comentário!</h5>
+        </div>
     </div>
 </script>
 <a href="#blog-title" class="btn btn-primary">voltar</a>

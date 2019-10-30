@@ -15,9 +15,9 @@
         });
     }
 
-    function getPostCommentText(link) {
+    function getPostComment(link) {
         return new Promise(function (resolve, reject) {
-            blogInstance.getItem('#comment' + link)
+            blogInstance.getItem("#comments-" + link)
                 .then(function (text) {
                     resolve(text);
                 });
@@ -98,6 +98,7 @@
         getOldestBlogPostId: getOldestBlogPostId,
         addPostText: addPostText,
         getPostText: getPostText,
+        getPostComment: getPostComment,
         addComment: addComment
     }
 });

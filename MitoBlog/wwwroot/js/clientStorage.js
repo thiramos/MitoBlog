@@ -14,6 +14,15 @@
                 });
         });
     }
+
+    function getPostCommentText(link) {
+        return new Promise(function (resolve, reject) {
+            blogInstance.getItem('#comment' + link)
+                .then(function (text) {
+                    resolve(text);
+                });
+        });
+    }
     
     function addPostText(link, text) {
         return new Promise(function (resolve, reject) {
@@ -38,6 +47,15 @@
                 .then(function () {
                     resolve();
                 });
+        });
+    }
+
+    function addComment(key, comment) {
+        return new Promise(function (resolve, reject) {
+            blogInstance.setItem(key, comment).then(function () {
+                resolve();
+                alert("Comentário cadastrado com sucesso!");
+            });
         });
     }
 
@@ -79,6 +97,7 @@
         getPosts: getPosts,
         getOldestBlogPostId: getOldestBlogPostId,
         addPostText: addPostText,
-        getPostText: getPostText
+        getPostText: getPostText,
+        addComment: addComment
     }
 });

@@ -23,6 +23,9 @@ window.pageEvents = {
     loadMoreBlogPosts: function () {
         blogService.loadMoreBlogPosts();
     },
+    insertComment: function (link) {
+        blogService.insertComment(link);
+    },
     tryAddHomeScreen: function () {
         defferedPrompt.prompt();
         defferedPrompt.userChoice.then((choiceResult) => {

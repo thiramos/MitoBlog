@@ -62,17 +62,47 @@
                         if (!data) {
 
                             var contentNotFound = $('#blog-content-not-found')
-                                .html().replace(/{{Link}}/g, link)
-                                ;
+                                .html().replace(/{{Link}}/g, link);
 
                             template.showBlogItem(contentNotFound, link);
                         } else {
                             var converter = new showdown.Converter();
                             html = converter.makeHtml(data);
                             template.showBlogItem(html, link);
+                            loadComentPost(link);
                         }
                         window.location = '#' + link;
                     })
+            });
+    }
+
+    function insertComment(link) {
+        var nome = $('#comentario-nome').val();
+        var email = $('#comentario-email').val();
+        var text = $('#comentario-text').val();
+        if (nome.length < 1 || email.length < 1 || text.length < 1) {
+            alert('Todos os campos são obrigatorios!');
+            return;
+        }
+        var d = new Date();
+
+        var key = "#comments-" + link + "-" + d.getTime();
+        var value = { nome: nome, email: email, text: text };
+        
+        clientStorage.addComment(key, value);
+    }
+
+    function loadComentPost(link) {
+        fetchPromise(link)
+            .then(function (status) {
+                $('#connection-status').html(status);
+
+                clientStorage.getPostCommentText(link)
+                    .then(function (data) {
+                        if (data) {
+                            template.showBlogComment(name, link, text);
+                        }
+                    });
             });
     }
 
@@ -83,6 +113,8 @@
     return {
         loadLatestBlogPosts: loadLatestBlogPosts,
         loadBlogPost: loadBlogPost,
-        loadMoreBlogPosts: loadMoreBlogPosts
+        loadMoreBlogPosts: loadMoreBlogPosts,
+        loadComentPost: loadComentPost,
+        insertComment: insertComment
     }
 });

@@ -32,8 +32,43 @@
     <div id="{{Link}}" class="blog-item">
         {{Content}}
     </div>
-    <a href="#blog-title" class="btn btn-primary">voltar</a>
+    <div id="comentarios" class="container">
+        <h2>Comentários</h2>
+        <div class="row" style="height: 50px">
+            <div class="col-md-2 align-self-center">Nome:</div>
+            <div class="col-md-8 align-self-center">
+                <input type="text" id="comentario-nome" />
+            </div>
+        </div>
+        <div class="row" style="height: 50px">
+            <div class="col-md-2 align-self-center">E-mail:</div>
+            <div class="col-md-8 align-self-center">
+                <input type="text" id="comentario-email" />
+            </div>
+        </div>
+        <div class="row" style="height: 50px">
+            <div class="col-md-2 align-self-center">Texto:</div>
+            <div class="col-md-8" align-self-center>
+                <textarea id="comentario-text"></textarea>
+            </div>
+        </div>
+        <div class="row" style="height: 50px">
+            <div class="col-md-8" align-self-center>
+                <a href="#comentarios" onclick="pageEvents.insertComment('{{Link}}')" class="btn btn-primary">Enviar</a>
+            </div>
+        </div>
+    </div>
 </script>
+
+<div id="blog-item-comment"></div>
+
+<script id="blog-comment" type="text/template">
+    <div id="{{Nome}} - {{Email}}" class="blog-item">
+        {{Text}}
+    </div>
+</script>
+<a href="#blog-title" class="btn btn-primary">voltar</a>
+
 
 <script id="blog-content-not-found" type="text/template">
     <h1>

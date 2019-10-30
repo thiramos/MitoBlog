@@ -99,6 +99,9 @@
     function loadComment(link) {
         clientStorage.getPostComment(link)
             .then(function (data) {
+                $('#blog-comment-container').html('<div></div>');
+                $('#blog-not-comment-container').html('<div></div>');
+
                 if (!data) {
                     template.showBlogNotComment();
                     return;
